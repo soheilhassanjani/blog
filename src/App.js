@@ -7,7 +7,7 @@ import PrivateRoute from "Routes/PrivateRoute";
 const Dashboard = lazy(() => import("Pages/app"));
 const Login = lazy(() => import("Pages/login"));
 const Register = lazy(() => import("Pages/register"));
-const NotFound = lazy(() => import("Pages/NotFound"));
+const NotFound = lazy(() => import("Pages/notFound"));
 
 function App() {
   return (
