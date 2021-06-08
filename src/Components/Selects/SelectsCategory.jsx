@@ -2,7 +2,7 @@ import { Alert, Select } from "antd";
 import React from "react";
 import { useGetCategories } from "Hook/api/Categories";
 
-function SelectsCategory({ value, onChange }) {
+function SelectsCategory({ value, onChange, filterOption = [] }) {
   const Categories = useGetCategories({
     Page: 1,
     PageSize: 9999999,
@@ -18,10 +18,12 @@ function SelectsCategory({ value, onChange }) {
       placeholder="موردی را انتخاب کنید ..."
       value={value}
       onChange={onChange}
-      options={options.map((i) => ({
-        label: i?.name,
-        value: i?.id,
-      }))}
+      options={options
+        .filter((i) => !filterOption.some((item) => item === i?.id))
+        .map((i) => ({
+          label: i?.name,
+          value: i?.id,
+        }))}
     />
   );
 }
