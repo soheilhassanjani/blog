@@ -1,4 +1,6 @@
 import NoWrapText from "Components/NoWrapText/NoWrapText";
+import { Link } from "react-router-dom";
+import { EditOutlined } from "@ant-design/icons";
 
 const TABLE_CATEGORY = [
   {
@@ -23,6 +25,18 @@ const TABLE_CATEGORY = [
     key: "parentCategoryId",
     render: (value) => {
       return <NoWrapText>{value || "بدون داده"}</NoWrapText>;
+    },
+  },
+  {
+    title: "",
+    key: "action",
+    width: "60px",
+    render: (_, record) => {
+      return (
+        <Link to={"/app/category/" + record?.id}>
+          <EditOutlined style={{ fontSize: 20 }} />
+        </Link>
+      );
     },
   },
 ];
