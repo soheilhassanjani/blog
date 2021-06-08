@@ -1,4 +1,6 @@
-import NoWrapText from "Components/NoWrapText";
+import NoWrapText from "Components/NoWrapText/NoWrapText";
+import { EditOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const TABLE_ARTICLE = [
   {
@@ -31,6 +33,18 @@ const TABLE_ARTICLE = [
     key: "categoryId",
     render: (value) => {
       return <NoWrapText>{value || "بدون داده"}</NoWrapText>;
+    },
+  },
+  {
+    title: "",
+    key: "action",
+    width: "60px",
+    render: (_, record) => {
+      return (
+        <Link to={"/app/article/" + record?.id}>
+          <EditOutlined style={{ fontSize: 20 }} />
+        </Link>
+      );
     },
   },
 ];
