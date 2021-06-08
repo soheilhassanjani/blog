@@ -8,6 +8,9 @@ import LoginProvider from "Provider/login/login.provider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import RegisterProvider from "Provider/register/register.provider";
 import { ConfigProvider } from "antd";
+import AddArticleProvider from "Provider/addArticle/addArticle.provider";
+import AuthProvider from "Provider/auth/auth.provider";
+import EditArticleProvider from "Provider/EditArticle/editArticle.provider";
 const queryClient = new QueryClient();
 
 ReactDOM.render(
@@ -15,11 +18,17 @@ ReactDOM.render(
     <Router>
       <ConfigProvider direction="rtl">
         <QueryClientProvider client={queryClient}>
-          <LoginProvider>
-            <RegisterProvider>
-              <App />
-            </RegisterProvider>
-          </LoginProvider>
+          <AuthProvider>
+            <LoginProvider>
+              <RegisterProvider>
+                <AddArticleProvider>
+                  <EditArticleProvider>
+                    <App />
+                  </EditArticleProvider>
+                </AddArticleProvider>
+              </RegisterProvider>
+            </LoginProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </ConfigProvider>
     </Router>
