@@ -13,8 +13,11 @@ function LoginProvider({ children }) {
   const handleState = (name, value) => {
     dispatch({ type: LoginTypes.SET_STATE, payload: { name, value } });
   };
+  const handleResetState = () => {
+    dispatch({ type: LoginTypes.RESET_STATE });
+  };
   // value
-  const value = { state, dispatch, actions: { handleState } };
+  const value = { state, dispatch, actions: { handleState, handleResetState } };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
