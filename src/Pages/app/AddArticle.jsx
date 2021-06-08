@@ -4,8 +4,9 @@ import { usePostPosts } from "Hook/api/Posts";
 import PageLayout from "Layout/PageLayout";
 import { useAddArticleCtx } from "Provider/addArticle/addArticle.provider";
 import { useAuthCtx } from "Provider/auth/auth.provider";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { errorHandlerAddArticle, StatusError } from "Utils/errorHandler";
 const { TextArea } = Input;
 
 function AddArticle() {
@@ -13,6 +14,9 @@ function AddArticle() {
   const { state, actions } = useAddArticleCtx();
   const PostPosts = usePostPosts();
   const onFinish = () => {
+    const ERROR = errorHandlerAddArticle(state);
+    if (ERROR.length) return handleState("errors", ERROR);
+    handleState("errors", []);
     PostPosts.mutate(
       {
         title: state.title,
@@ -23,12 +27,19 @@ function AddArticle() {
       {
         onSuccess: (res) => {
           message.success(res?.data?.message);
+          handleResetState();
         },
       }
     );
   };
 
-  const { handleState } = actions;
+  const { handleState, handleResetState } = actions;
+
+  useEffect(() => {
+    handleResetState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <PageLayout
       title="افزودن مقاله"
@@ -41,19 +52,38 @@ function AddArticle() {
       <Row>
         <Col offset={8} xs={8}>
           <Form onFinish={onFinish}>
-            <Form.Item label="عنوان مقاله" labelCol={{ span: 8 }}>
+            <Form.Item
+              label="عنوان مقاله"
+              labelCol={{ span: 8 }}
+              validateStatus={StatusError(state.errors, "title") && "error"}
+              help={StatusError(state.errors, "title")?.help || null}
+            >
               <Input
                 value={state.title}
                 onChange={(e) => handleState("title", e.target.value)}
               />
             </Form.Item>
-            <Form.Item label="دسته بندی" labelCol={{ span: 8 }}>
+            <Form.Item
+              label="دسته بندی"
+              labelCol={{ span: 8 }}
+              validateStatus={
+                StatusError(state.errors, "categoryId") && "error"
+              }
+              help={StatusError(state.errors, "categoryId")?.help || null}
+            >
               <SelectsCategory
                 value={state.categoryId}
                 onChange={(value) => handleState("categoryId", value)}
               />
             </Form.Item>
-            <Form.Item label="متن مقاله" labelCol={{ span: 8 }}>
+            <Form.Item
+              label="متن مقاله"
+              labelCol={{ span: 8 }}
+              validateStatus={
+                StatusError(state.errors, "description") && "error"
+              }
+              help={StatusError(state.errors, "description")?.help || null}
+            >
               <TextArea
                 value={state.description}
                 onChange={(e) => handleState("description", e.target.value)}
