@@ -1,7 +1,13 @@
+import { Spin } from "antd";
 import React from "react";
+import { Container } from "./Styled";
 
 function Loading() {
-  return <div>loading...</div>;
+  return (
+    <Container>
+      <Spin />
+    </Container>
+  );
 }
 
 export default Loading;
