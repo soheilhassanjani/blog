@@ -1,6 +1,6 @@
 import AuthTypes from "./auth.types";
 
-export const initialStateAuth = {};
+export const initialStateAuth = null;
 
 export const initFuncAuth = (history) => {
   const USER_DATA = localStorage.getItem("USER_DATA");
@@ -11,8 +11,8 @@ export const initFuncAuth = (history) => {
 
 const AuthReducer = (state, action) => {
   switch (action.type) {
-    case AuthTypes.SET_STATE:
-      return { ...state, [action.payload.name]: action.payload.value };
+    case AuthTypes.LOGOUT:
+      return null;
 
     case AuthTypes.SET_USER:
       return action.payload;

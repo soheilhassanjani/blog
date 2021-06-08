@@ -14,15 +14,18 @@ function AuthProvider({ children }) {
     initFuncAuth(history)
   );
   // actions
-  const handleState = (name, value) => {
-    dispatch({ type: AuthTypes.SET_STATE, payload: { name, value } });
+  const handleLogout = () => {
+    dispatch({ type: AuthTypes.LOGOUT });
+    localStorage.removeItem("USER_DATA");
+    console.clear();
+    history.push("/");
   };
   const setUser = (user) => {
     dispatch({ type: AuthTypes.SET_USER, payload: user });
     localStorage.setItem("USER_DATA", JSON.stringify(user));
   };
   // value
-  const value = { user, dispatch, actions: { handleState, setUser } };
+  const value = { user, dispatch, actions: { handleLogout, setUser } };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
