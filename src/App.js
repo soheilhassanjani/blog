@@ -1,5 +1,7 @@
 import Loading from "Components/Loading/Loading";
-import React, { lazy, Suspense } from "react";
+import { setupInterceptors } from "Config/instanceAxios";
+import { useAuthCtx } from "Provider/auth/auth.provider";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import GuestRoute from "Routes/GuestRoute";
 import PrivateRoute from "Routes/PrivateRoute";
@@ -10,6 +12,12 @@ const Register = lazy(() => import("Pages/register"));
 const NotFound = lazy(() => import("Pages/notFound"));
 
 function App() {
+  const { actions } = useAuthCtx();
+  const { handleLogout } = actions;
+  useEffect(() => {
+    setupInterceptors(handleLogout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
