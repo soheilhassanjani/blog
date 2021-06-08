@@ -4,6 +4,7 @@ export const initialStateEditArticle = {
   title: "",
   description: "",
   categoryId: null,
+  errors: [],
 };
 
 const EditArticleReducer = (state, action) => {
