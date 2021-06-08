@@ -6,15 +6,19 @@ import { useAuthCtx } from "Provider/auth/auth.provider";
 import { useEditArticleCtx } from "Provider/EditArticle/editArticle.provider";
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { errorHandlerAddArticle, StatusError } from "Utils/errorHandler";
 const { TextArea } = Input;
 
 function EditArticle() {
-  let { id } = useParams();
+  const { id } = useParams();
   const GetPostById = useGetPostById({ id });
   const PutPosts = usePutPosts();
   const { user } = useAuthCtx();
   const { state, actions } = useEditArticleCtx();
   const onFinish = () => {
+    const ERROR = errorHandlerAddArticle(state);
+    if (ERROR.length) return handleState("errors", ERROR);
+    handleState("errors", []);
     PutPosts.mutate(
       {
         id,
@@ -43,7 +47,7 @@ function EditArticle() {
 
   return (
     <PageLayout
-      title="افزودن مقاله"
+      title="ویرایش مقاله"
       extra={[
         <Button type="primary" key={0}>
           <Link to="/app/article">لیست مقالات</Link>
@@ -53,19 +57,38 @@ function EditArticle() {
       <Row>
         <Col offset={8} xs={8}>
           <Form onFinish={onFinish}>
-            <Form.Item label="عنوان مقاله" labelCol={{ span: 8 }}>
+            <Form.Item
+              label="عنوان مقاله"
+              labelCol={{ span: 8 }}
+              validateStatus={StatusError(state.errors, "title") && "error"}
+              help={StatusError(state.errors, "title")?.help || null}
+            >
               <Input
                 value={state.title}
                 onChange={(e) => handleState("title", e.target.value)}
               />
             </Form.Item>
-            <Form.Item label="دسته بندی" labelCol={{ span: 8 }}>
+            <Form.Item
+              label="دسته بندی"
+              labelCol={{ span: 8 }}
+              validateStatus={
+                StatusError(state.errors, "categoryId") && "error"
+              }
+              help={StatusError(state.errors, "categoryId")?.help || null}
+            >
               <SelectsCategory
                 value={state.categoryId}
                 onChange={(value) => handleState("categoryId", value)}
               />
             </Form.Item>
-            <Form.Item label="متن مقاله" labelCol={{ span: 8 }}>
+            <Form.Item
+              label="متن مقاله"
+              labelCol={{ span: 8 }}
+              validateStatus={
+                StatusError(state.errors, "description") && "error"
+              }
+              help={StatusError(state.errors, "description")?.help || null}
+            >
               <TextArea
                 value={state.description}
                 onChange={(e) => handleState("description", e.target.value)}
