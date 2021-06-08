@@ -13,8 +13,11 @@ function RegisterProvider({ children }) {
   const handleState = (name, value) => {
     dispatch({ type: RegisterTypes.SET_STATE, payload: { name, value } });
   };
+  const handleResetState = () => {
+    dispatch({ type: RegisterTypes.RESET_STATE });
+  };
   // value
-  const value = { state, dispatch, actions: { handleState } };
+  const value = { state, dispatch, actions: { handleState, handleResetState } };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
