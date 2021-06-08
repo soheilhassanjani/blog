@@ -24,7 +24,7 @@ function Category() {
 
   return (
     <PageLayout
-      title="مقالات"
+      title="دسته بندی"
       extra={[
         <Button type="primary" key={0}>
           <Link to="/app/add-category">افزودن دسته بندی</Link>
