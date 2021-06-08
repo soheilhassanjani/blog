@@ -1,7 +1,8 @@
+import { useAuthCtx } from "Provider/auth/auth.provider";
 import React from "react";
 import ConditionalRoute from "./ConditionalRoute";
 const PrivateRoute = (props) => {
-  const predicate = localStorage.getItem("AUTH_TOKEN");
-  return <ConditionalRoute predicate={Boolean(predicate)} {...props} />;
+  const { user } = useAuthCtx();
+  return <ConditionalRoute predicate={Boolean(user)} {...props} />;
 };
 export default PrivateRoute;

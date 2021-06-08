@@ -1,5 +1,6 @@
 import { message } from "antd";
 import axios from "axios";
+import { getToken } from "Utils/auth";
 
 const instance = axios.create({
   baseURL: "http://185.165.118.211:9074/api/v1",
@@ -7,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
+    const AUTH_TOKEN = getToken();
     if (AUTH_TOKEN) {
       config.headers["Authorization"] = "Bearer " + AUTH_TOKEN;
     }
@@ -24,7 +25,8 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    message.error(error.response.data.message);
+    if (error?.response?.data?.message)
+      message.error(error?.response?.data?.message);
     return Promise.reject(error);
   }
 );
