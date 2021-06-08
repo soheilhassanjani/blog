@@ -5,7 +5,7 @@ import PageLayout from "Layout/PageLayout";
 import React, { useEffect, useState } from "react";
 import { useGetPosts } from "Hook/api/Posts";
 import { Link } from "react-router-dom";
-import Table from "Components/Table";
+import Table from "Components/Table/Table";
 
 function Article() {
   const [page, setPage] = useState(1);

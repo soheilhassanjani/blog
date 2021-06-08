@@ -1,4 +1,4 @@
-import NoWrapText from "Components/NoWrapText";
+import NoWrapText from "Components/NoWrapText/NoWrapText";
 
 const TABLE_CATEGORY = [
   {

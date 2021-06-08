@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useGetCategories } from "Hook/api/Categories";
 import PageLayout from "Layout/PageLayout";
-import { Button, Table } from "antd";
+import { Button } from "antd";
 import { Link } from "react-router-dom";
 import tableProps from "Constant/table";
 import TABLE_CATEGORY from "Config/tables/table.category";
+import Table from "Components/Table/Table";
 
 function Category() {
   const [page, setPage] = useState(1);
@@ -36,6 +37,7 @@ function Category() {
           setPageSize(pageSize);
         })}
         loading={Categories.isLoading}
+        isError={Categories.isError}
         dataSource={dataSource}
         columns={TABLE_CATEGORY}
       />
